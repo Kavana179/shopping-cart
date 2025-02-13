@@ -3,10 +3,10 @@ name: SonarCloud
 on:
   push:
     branches:
-      - master  # Use the master branch instead of main
+      - master  # Ensure this is the branch you're working with
   pull_request:
     branches:
-      - master  # Adjust to trigger pull requests for the master branch
+      - master
 
 jobs:
   sonarcloud:
