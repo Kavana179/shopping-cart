@@ -1,11 +1,12 @@
 name: SonarCloud
+
 on:
   push:
     branches:
-      - master
+      - master # Use the master branch instead of main
   pull_request:
     branches:
-      - master
+      - master # Adjust to trigger pull requests for the master branch
 
 jobs:
   sonarcloud:
@@ -13,14 +14,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Set up JDK 11
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'adoptopenjdk'  # Add the distribution input here
 
+      # Cache SonarCloud dependencies
       - name: Cache SonarCloud dependencies
         uses: actions/cache@v2
         with:
@@ -29,10 +34,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-
 
+      # Install dependencies
       - name: Install dependencies
         run: mvn install -DskipTests=true
 
+      # Run SonarCloud analysis
       - name: Run SonarCloud analysis
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn sonar:sonar -Dsonar.projectKey= 852b73cd9811da63e78ad1d6c13efabcc95290ff -Dsonar.host.url=https://sonarcloud.io
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Add your SonarCloud token to the secrets
+        run: mvn sonar:sonar -Dsonar.projectKey=852b73cd9811da63e78ad1d6c13efabcc95290ff -Dsonar.host.url=https://sonarcloud.io
