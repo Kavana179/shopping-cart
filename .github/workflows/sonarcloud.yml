@@ -3,10 +3,10 @@ name: SonarCloud
 on:
   push:
     branches:
-      - master # Use the master branch instead of main
+      - master  # Use the master branch instead of main
   pull_request:
     branches:
-      - master # Adjust to trigger pull requests for the master branch
+      - master  # Adjust to trigger pull requests for the master branch
 
 jobs:
   sonarcloud:
@@ -22,7 +22,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: '17'  # Use Java 17
+          java-version: '17'
           distribution: 'temurin'  # Eclipse Temurin for Java 17
 
       # Cache SonarCloud dependencies
@@ -38,8 +38,9 @@ jobs:
       - name: Install dependencies
         run: mvn install -DskipTests=true
 
-      # Run SonarCloud analysis
+      # Run SonarCloud analysis with sonar.organization
       - name: Run SonarCloud analysis
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Add your SonarCloud token to the secrets
-        run: mvn sonar:sonar -Dsonar.projectKey=852b73cd9811da63e78ad1d6c13efabcc95290ff -Dsonar.host.url=https://sonarcloud.io
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Add your SonarCloud token to the secrets
+          SONAR_ORG: "kavana179"  # SonarCloud organization key
+        run: mvn sonar:sonar -Dsonar.projectKey=852b73cd9811da63e78ad1d6c13efabcc95290ff -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=${{ secrets.SONAR_ORG }}
