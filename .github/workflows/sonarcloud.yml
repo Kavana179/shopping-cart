@@ -38,9 +38,9 @@ jobs:
       - name: Install dependencies
         run: mvn install -DskipTests=true
 
-      # Run SonarCloud analysis with sonar.organization
+      # Run SonarCloud analysis with the correct project key
       - name: Run SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Add your SonarCloud token to the secrets
           SONAR_ORG: "kavana179"  # SonarCloud organization key
-        run: mvn sonar:sonar -Dsonar.projectKey=852b73cd9811da63e78ad1d6c13efabcc95290ff -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=${{ secrets.SONAR_ORG }}
+        run: mvn sonar:sonar -Dsonar.projectKey=kavana179_Kavana179_shopping-cart -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=${{ secrets.SONAR_ORG }}
